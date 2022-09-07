@@ -1,6 +1,6 @@
 var http = require("http");
 var url = require("url");
-var fetch = require("fetch");
+var fetch = require("node-fetch");
 
 var port = process.env.PORT;
 

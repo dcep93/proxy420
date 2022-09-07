@@ -1,11 +1,13 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var cors = require("cors");
 var fetch = require("node-fetch");
 
 var port = process.env.PORT;
 
 var app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 app.post("/", (req, res) =>
   Promise.resolve(req.body)

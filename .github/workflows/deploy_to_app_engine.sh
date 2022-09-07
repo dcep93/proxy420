@@ -16,4 +16,5 @@ echo "$1" > "$GOOGLE_APPLICATION_CREDENTIALS"
 npm install google-auth-library
 gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
 echo "runtime: nodejs16" > app.yaml
-gcloud app deploy
+project_id="$(cat $GOOGLE_APPLICATION_CREDENTIALS | jq -r .project_id)"
+gcloud app deploy --project "${project_id}"

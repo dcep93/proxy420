@@ -13,8 +13,8 @@ set -euo pipefail
 cd app
 export GOOGLE_APPLICATION_CREDENTIALS="gac.json"
 echo "$1" > "$GOOGLE_APPLICATION_CREDENTIALS"
-exit 0
 npm install gcloud
+exit 0
 gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
 echo "runtime: nodejs16" > app.yaml
 gcloud app deploy

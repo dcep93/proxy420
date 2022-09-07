@@ -3,7 +3,6 @@
 set -euo pipefail
 
 # # disable billing
-# # create firebase project
 # nvm install 16.4.0
 # gcloud app create --project "$GOOGLE_CLOUD_PROJECT" --region us-east1
 # gcloud iam service-accounts create deployer-github
@@ -16,4 +15,5 @@ export GOOGLE_APPLICATION_CREDENTIALS="gac.json"
 echo "$1" > "$GOOGLE_APPLICATION_CREDENTIALS"
 npm install gcloud
 gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
+echo "runtime: nodejs16" > app.yaml
 gcloud app deploy

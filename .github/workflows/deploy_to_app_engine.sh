@@ -3,6 +3,7 @@
 set -euo pipefail
 
 # # enable api https://console.developers.google.com/apis/api/appengine.googleapis.com/overview
+# # enable cloud build https://console.cloud.google.com/apis/library/cloudbuild.googleapis.com
 # # disable billing
 # nvm install 16.4.0
 # gcloud app create --project "$GOOGLE_CLOUD_PROJECT" --region us-east1

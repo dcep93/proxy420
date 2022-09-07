@@ -15,7 +15,10 @@ app.post("/", (req, res) =>
     .then((url) => fetch(url))
     .then((resp) => resp.text())
     .then((text) => res.send(text))
-    .catch((err) => res.status(500).send(err))
+    .catch((err) => {
+      console.error(error);
+      res.status(500).send(err);
+    })
 );
 
 app.listen(port);

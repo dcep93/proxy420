@@ -1,10 +1,16 @@
 var http = require("http");
+var url = require("url");
 
 var port = process.env.PORT;
 
 http
   .createServer(function (req, res) {
-    res.write("Hello World");
-    res.end();
+    const queryObject = url.parse(req.url, true).query;
+    fetch(queryObject.url)
+      .then((resp) => resp.text())
+      .then((text) => {
+        res.write(text);
+        res.end();
+      });
   })
   .listen(port);

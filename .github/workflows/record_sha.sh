@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-echo wut
-
 filename=recorded_sha.txt
 
 cd app

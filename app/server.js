@@ -2,6 +2,11 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var cors = require("cors");
 var fetch = require("node-fetch");
+var fs = require("fs");
+
+require.extensions[".txt"] = function (module, filename) {
+  module.exports = fs.readFileSync(filename, "utf8");
+};
 
 var recorded_sha = require("./recorded_sha.txt");
 

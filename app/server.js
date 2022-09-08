@@ -3,11 +3,17 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var fetch = require("node-fetch");
 
+var recorded_sha = require("./recorded_sha.txt");
+
 var port = process.env.PORT;
 
 var app = express();
 app.use(bodyParser.json());
 app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send(recorded_sha);
+});
 
 app.post("/", (req, res) =>
   Promise.resolve(req.body)

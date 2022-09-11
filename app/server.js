@@ -66,7 +66,7 @@ app.get("/test", (req, res) =>
     })
 );
 
-app.get("/test/:url*", (req, res) =>
+app.get("/test/*", (req, res) =>
   Promise.resolve(req.params)
     .then((params) => JSON.stringify(params))
     .then((resp) => res.send(resp))

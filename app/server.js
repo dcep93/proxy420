@@ -31,10 +31,10 @@ app.post("/", (req, res) =>
     })
 );
 
-app.get("/test", (req, res) => res.send(req.query.url));
+app.get("/test/:url", (req, res) => res.send(req.params.url));
 
-app.get("/get", (req, res) =>
-  Promise.resolve(req.query.url)
+app.get("/:url", (req, res) =>
+  Promise.resolve(req.params.url)
     .then((url) => `https://tinyurl.is/${url}`)
     .then((url) => fetch(url))
     .then((resp) => resp.text())

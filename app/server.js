@@ -31,81 +31,48 @@ app.post("/", (req, res) =>
     })
 );
 
-app.get("/test", (req, res) =>
-  fetch(
-    "https://tinyurl.is/cdn-cgi/challenge-platform/h/g/orchestrate/jsch/v1?ray=749349e39af86fe9",
-    {
-      headers: {
-        accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-        "accept-language": "en-US,en;q=0.9",
-        "cache-control": "no-cache",
-        pragma: "no-cache",
-        "sec-ch-ua":
-          '"Google Chrome";v="105", "Not)A;Brand";v="8", "Chromium";v="105"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": '"macOS"',
-        "sec-fetch-dest": "document",
-        "sec-fetch-mode": "navigate",
-        "sec-fetch-site": "none",
-        "sec-fetch-user": "?1",
-        "upgrade-insecure-requests": "1",
-      },
-      referrerPolicy: "strict-origin-when-cross-origin",
-      body: null,
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-    }
-  )
-    .then((resp) => resp.text())
-    .then((text) => res.send(text))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send(err);
+app.get(
+  "/*",
+  (req, res) =>
+    Promise.resolve({
+      path: req.params[0],
+      query: Object.entries(req.query)
+        .map(([k, v]) => [k, v].join("="))
+        .join("&"),
     })
-);
-
-app.get("/test/*", (req, res) =>
-  Promise.resolve({ params: req.params[0], query: req.query })
-    .then((obj) => JSON.stringify(obj))
-    .then((resp) => res.send(resp))
-);
-
-app.get("/:url*", (req, res) =>
-  Promise.resolve(req.params.url)
-    .then((url) => `https://tinyurl.is/${url}`)
-    .then((url) =>
-      fetch(url, {
-        headers: {
-          accept:
-            "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-          "accept-language": "en-US,en;q=0.9",
-          "cache-control": "no-cache",
-          pragma: "no-cache",
-          "sec-ch-ua":
-            '"Google Chrome";v="105", "Not)A;Brand";v="8", "Chromium";v="105"',
-          "sec-ch-ua-mobile": "?0",
-          "sec-ch-ua-platform": '"macOS"',
-          "sec-fetch-dest": "document",
-          "sec-fetch-mode": "navigate",
-          "sec-fetch-site": "none",
-          "sec-fetch-user": "?1",
-          "upgrade-insecure-requests": "1",
-        },
-        referrerPolicy: "strict-origin-when-cross-origin",
-        body: null,
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-      })
-    )
-    .then((resp) => resp.text())
-    .then((text) => res.send(text))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send(err);
-    })
+      .then(({ path, query }) => `https://tinyurl.is/${path}?${query}`)
+      .then((resp) => res.send(resp))
+  // .then((url) =>
+  //   fetch(url, {
+  //     headers: {
+  //       accept:
+  //         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+  //       "accept-language": "en-US,en;q=0.9",
+  //       "cache-control": "no-cache",
+  //       pragma: "no-cache",
+  //       "sec-ch-ua":
+  //         '"Google Chrome";v="105", "Not)A;Brand";v="8", "Chromium";v="105"',
+  //       "sec-ch-ua-mobile": "?0",
+  //       "sec-ch-ua-platform": '"macOS"',
+  //       "sec-fetch-dest": "document",
+  //       "sec-fetch-mode": "navigate",
+  //       "sec-fetch-site": "none",
+  //       "sec-fetch-user": "?1",
+  //       "upgrade-insecure-requests": "1",
+  //     },
+  //     referrerPolicy: "strict-origin-when-cross-origin",
+  //     body: null,
+  //     method: "GET",
+  //     mode: "cors",
+  //     credentials: "include",
+  //   })
+  // )
+  // .then((resp) => resp.text())
+  // .then((text) => res.send(text))
+  // .catch((err) => {
+  //   console.error(err);
+  //   res.status(500).send(err);
+  // })
 );
 
 app.listen(port);

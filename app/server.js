@@ -31,19 +31,9 @@ app.post("/", (req, res) =>
     })
 );
 
-app.get("/supertest", (req, res) =>
-  Promise.resolve()
-    .then(() => fetch("https://tinyurl.is/IDu0"))
-    .then((resp) => resp.text())
-    .then((text) => res.send(text))
-    .catch((err) => {
-      console.error(error);
-      res.status(500).send(err);
-    })
-);
-
 app.get("/:url", (req, res) =>
   Promise.resolve(req.query.url)
+    .then((url) => `https://tinyurl.is/${url}`)
     .then((url) => fetch(url))
     .then((resp) => resp.text())
     .then((text) => res.send(text))
@@ -52,7 +42,5 @@ app.get("/:url", (req, res) =>
       res.status(500).send(err);
     })
 );
-
-app.get("/test/:url", (req, res) => res.send(req.query.url));
 
 app.listen(port);

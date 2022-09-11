@@ -31,9 +31,7 @@ app.post("/", (req, res) =>
     })
 );
 
-app.get("/test/:url", (req, res) => res.send(req.params.url));
-
-app.get("/:url", (req, res) =>
+app.get("/:url*", (req, res) =>
   Promise.resolve(req.params.url)
     .then((url) => `https://tinyurl.is/${url}`)
     .then((url) => fetch(url))

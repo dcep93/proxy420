@@ -42,4 +42,6 @@ app.get("/:url", (req, res) =>
     })
 );
 
+app.get("/test/:url", (req, res) => res.send(req.query.url));
+
 app.listen(port);

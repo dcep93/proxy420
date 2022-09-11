@@ -20,17 +20,26 @@ app.get("/", (req, res) => {
   res.send(recorded_sha);
 });
 
-app.post(
-  "/",
-  (req, res) =>
-    Promise.resolve(req.body).then((body) => res.send(JSON.stringify(body)))
-  // .then(({ url, options }) => fetch(url, options))
-  // .then((resp) => resp.text())
-  // .then((text) => res.send(text))
-  // .catch((err) => {
-  //   console.error(error);
-  //   res.status(500).send(err);
-  // })
+app.post("/", (req, res) =>
+  Promise.resolve(req.body)
+    .then(({ url, options }) => fetch(url, options))
+    .then((resp) => resp.text())
+    .then((text) => res.send(text))
+    .catch((err) => {
+      console.error(error);
+      res.status(500).send(err);
+    })
+);
+
+app.get("/:url", (req, res) =>
+  Promise.resolve(req.query.url)
+    .then((url) => fetch(url))
+    .then((resp) => resp.text())
+    .then((text) => res.send(text))
+    .catch((err) => {
+      console.error(error);
+      res.status(500).send(err);
+    })
 );
 
 app.listen(port);

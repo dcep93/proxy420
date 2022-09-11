@@ -67,8 +67,8 @@ app.get("/test", (req, res) =>
 );
 
 app.get("/test/*", (req, res) =>
-  Promise.resolve(req.params)
-    .then((params) => JSON.stringify(params))
+  Promise.resolve({ params: req.params, query: req.query })
+    .then((obj) => JSON.stringify(obj))
     .then((resp) => res.send(resp))
 );
 

@@ -26,19 +26,21 @@ app.post("/", (req, res) =>
     .then((resp) => resp.text())
     .then((text) => res.send(text))
     .catch((err) => {
-      console.error(error);
+      console.error(err);
       res.status(500).send(err);
     })
 );
 
-app.get("/:url", (req, res) =>
+app.get("/test", (req, res) => res.send(req.query.url));
+
+app.get("/get", (req, res) =>
   Promise.resolve(req.query.url)
     .then((url) => `https://tinyurl.is/${url}`)
     .then((url) => fetch(url))
     .then((resp) => resp.text())
     .then((text) => res.send(text))
     .catch((err) => {
-      console.error(error);
+      console.error(err);
       res.status(500).send(err);
     })
 );

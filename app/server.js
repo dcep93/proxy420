@@ -22,20 +22,7 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) =>
   Promise.resolve(req.body)
-    .then((body) => body.url)
-    .then((url) => fetch(url))
-    .then((resp) => resp.text())
-    .then((text) => res.send(text))
-    .catch((err) => {
-      console.error(error);
-      res.status(500).send(err);
-    })
-);
-
-app.post("/raw", (req, res) =>
-  Promise.resolve(req.body)
-    .then((body) => body.params)
-    .then((params) => fetch(params))
+    .then(({ url, options }) => fetch(url, options))
     .then((resp) => resp.text())
     .then((text) => res.send(text))
     .catch((err) => {

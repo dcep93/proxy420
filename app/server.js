@@ -32,4 +32,16 @@ app.post("/", (req, res) =>
     })
 );
 
+app.post("/raw", (req, res) =>
+  Promise.resolve(req.body)
+    .then((body) => body.params)
+    .then((params) => fetch(params))
+    .then((resp) => resp.text())
+    .then((text) => res.send(text))
+    .catch((err) => {
+      console.error(error);
+      res.status(500).send(err);
+    })
+);
+
 app.listen(port);

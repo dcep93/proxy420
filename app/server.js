@@ -31,24 +31,6 @@ app.post("/", (req, res) =>
     })
 );
 
-app.get("/pre/*", (req, res) =>
-  Promise.resolve({
-    path: req.params[0],
-    query: Object.entries(req.query)
-      .map(([k, v]) => [k, v].join("="))
-      .join("&"),
-  })
-    .then(({ path, query }) => `${path}?${query}`)
-    .then((url) => fetch(url))
-    .then((resp) => resp.text())
-    .then((text) => `<pre>${text}</pre>\n`)
-    .then((text) => res.send(text))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send(err);
-    })
-);
-
 app.get("/*", (req, res) =>
   Promise.resolve({
     path: req.params[0],

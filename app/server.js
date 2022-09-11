@@ -67,9 +67,9 @@ app.get("/test", (req, res) =>
 );
 
 app.get("/test/:url*", (req, res) =>
-  Promise.resolve(req.params.url)
-    .then((url) => `https://tinyurl.is/${url}`)
-    .then((url) => res.send(url))
+  Promise.resolve(req.params)
+    .then((params) => JSON.stringify(params))
+    .then((resp) => res.send(resp))
 );
 
 app.get("/:url*", (req, res) =>

@@ -24,14 +24,23 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) =>
   Promise.resolve(req.body)
-    .then(({ url, options }) => fetch(url, options))
-    .then((resp) => resp.text())
-    .then((text) => res.send(text))
+    .then(({ url, options }) => res.send(JSON.stringify(options)))
     .catch((err) => {
       console.error(err);
       res.status(500).send(`${hostname}: ${err}`);
     })
 );
+
+// app.post("/", (req, res) =>
+//   Promise.resolve(req.body)
+//     .then(({ url, options }) => fetch(url, options))
+//     .then((resp) => resp.text())
+//     .then((text) => res.send(text))
+//     .catch((err) => {
+//       console.error(err);
+//       res.status(500).send(`${hostname}: ${err}`);
+//     })
+// );
 
 app.get("/*", (req, res) =>
   Promise.resolve({

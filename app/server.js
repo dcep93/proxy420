@@ -3,12 +3,14 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var fetch = require("node-fetch");
 var fs = require("fs");
+var os = require("os");
 
 require.extensions[".txt"] = function (module, filename) {
   module.exports = fs.readFileSync(filename, "utf8");
 };
 
 var recorded_sha = require("./recorded_sha.txt");
+var hostname = os.hostname();
 
 var port = process.env.PORT;
 
@@ -27,7 +29,7 @@ app.post("/", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(`${err}`);
+      res.status(500).send(`${hostname}: ${err}`);
     })
 );
 
@@ -44,7 +46,7 @@ app.get("/*", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(`${err}`);
+      res.status(500).send(`${hostname}: ${err}`);
     })
 );
 

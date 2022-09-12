@@ -74,4 +74,4 @@ app.get("/weakstreams", (req, res) =>
     })
 );
 
-app.listen(port);
+app.listen(port, "listening");

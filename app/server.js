@@ -27,7 +27,7 @@ app.post("/", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(err);
+      res.status(500).send(JSON.stringify(err));
     })
 );
 
@@ -38,7 +38,7 @@ app.get("/internal", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(err);
+      res.status(500).send(JSON.stringify(err));
     })
 );
 
@@ -49,7 +49,7 @@ app.get("/tinyurl", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(err);
+      res.status(500).send(JSON.stringify(err));
     })
 );
 
@@ -64,7 +64,7 @@ app.get("/weakstreams", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(err);
+      res.status(500).send(JSON.stringify(err));
     })
 );
 
@@ -81,7 +81,7 @@ app.get("/*", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(err);
+      res.status(500).send(JSON.stringify(err));
     })
 );
 

@@ -31,6 +31,23 @@ app.post("/", (req, res) =>
     })
 );
 
+app.get("/*", (req, res) =>
+  Promise.resolve({
+    path: req.params[0],
+    query: Object.entries(req.query)
+      .map(([k, v]) => [k, v].join("="))
+      .join("&"),
+  })
+    .then(({ path, query }) => `${path}?${query}`)
+    .then((url) => fetch(url))
+    .then((resp) => resp.text())
+    .then((text) => res.send(text))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(err);
+    })
+);
+
 app.get("/tinyurl", (req, res) =>
   Promise.resolve()
     .then(() => fetch("https://tinyurl.is/IDu0?sport=american-football"))
@@ -49,23 +66,6 @@ app.get("/weakstreams", (req, res) =>
         "https://weakstreams.com/nfl-streams/detroit-lions-vs-philadelphia-eagles/81031?sport=american-football"
       )
     )
-    .then((resp) => resp.text())
-    .then((text) => res.send(text))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send(err);
-    })
-);
-
-app.get("/*", (req, res) =>
-  Promise.resolve({
-    path: req.params[0],
-    query: Object.entries(req.query)
-      .map(([k, v]) => [k, v].join("="))
-      .join("&"),
-  })
-    .then(({ path, query }) => `${path}?${query}`)
-    .then((url) => fetch(url))
     .then((resp) => resp.text())
     .then((text) => res.send(text))
     .catch((err) => {

@@ -27,7 +27,7 @@ app.post("/", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(JSON.stringify(err));
+      res.status(500).send(`${err}`);
     })
 );
 
@@ -44,7 +44,7 @@ app.get("/*", (req, res) =>
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);
-      res.status(500).send(JSON.stringify(err));
+      res.status(500).send(`${err}`);
     })
 );
 

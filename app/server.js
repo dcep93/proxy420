@@ -31,6 +31,17 @@ app.post("/", (req, res) =>
     })
 );
 
+app.get("/internal", (req, res) =>
+  Promise.resolve()
+    .then(() => fetch("http://10.128.0.3:80"))
+    .then((resp) => resp.text())
+    .then((text) => res.send(text))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(err);
+    })
+);
+
 app.get("/tinyurl", (req, res) =>
   Promise.resolve()
     .then(() => fetch("https://tinyurl.is/IDu0?sport=american-football"))

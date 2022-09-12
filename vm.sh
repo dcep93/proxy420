@@ -13,4 +13,3 @@ git reset --hard HEAD && \
     npm install && \
     printf "<pre>%s\n%s\n</pre>\n" "$(TZ='America/Los_Angeles' date)" "$(git log -1)" > recorded_sha.txt && \
     sudo PORT=80 node server.js
-# git pull

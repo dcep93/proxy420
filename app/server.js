@@ -4,23 +4,17 @@ var cors = require("cors");
 var fetch = require("node-fetch");
 var fs = require("fs");
 
-console.log("a");
-
 require.extensions[".txt"] = function (module, filename) {
   module.exports = fs.readFileSync(filename, "utf8");
 };
 
 var recorded_sha = require("./recorded_sha.txt");
 
-console.log("b");
-
 var port = process.env.PORT;
 
 var app = express();
 app.use(bodyParser.json());
 app.use(cors());
-
-console.log("c");
 
 app.get("/", (req, res) => {
   res.send(recorded_sha);
@@ -80,8 +74,4 @@ app.get("/weakstreams", (req, res) =>
     })
 );
 
-console.log("e");
-
-app.listen(port, () => "listening");
-
-console.log("e");
+app.listen(port, () => console.log("listening"));

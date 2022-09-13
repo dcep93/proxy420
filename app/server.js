@@ -41,10 +41,34 @@ app.get("/*", (req, res) =>
     })
 );
 
+const cache = {};
+function trimCache() {
+  const trimTime = new Date().getTime() - 24 * 60 * 60 * 1000;
+  Array.from(Object.entries(cache))
+    .map(([key, { timestamp }]) => ({
+      key,
+      timestamp,
+    }))
+    .filter(({ timestamp }) => timestamp < trimTime)
+    .forEach(({ key }) => {
+      delete cache[key];
+    });
+}
+setInterval(trimCache, 4 * 60 * 60 * 1000);
 app.post("/", (req, res) =>
   Promise.resolve(req.body)
-    .then(({ url, options }) => fetch(url, options))
-    .then((resp) => resp.text())
+    .then(({ maxAgeMs, url, options }) => {
+      const cached = cache[url];
+      const timestamp = new Date().getTime();
+      if (cached && timestamp - cached.timestamp < maxAgeMs)
+        return Promise.resolve(cached.data);
+      return fetch(url, options)
+        .then((resp) => resp.text())
+        .then((data) => {
+          cache[key] = { timestamp, data };
+          return data;
+        });
+    })
     .then((text) => res.send(text))
     .catch((err) => {
       console.error(err);

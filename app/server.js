@@ -65,7 +65,7 @@ app.post("/", (req, res) =>
       return fetch(url, options)
         .then((resp) => resp.text())
         .then((data) => {
-          cache[key] = { timestamp, data };
+          cache[url] = { timestamp, data };
           return data;
         });
     })

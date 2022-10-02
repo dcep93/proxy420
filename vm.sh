@@ -1,7 +1,8 @@
 #!/bin/bash
 
+sudo apt-get remove -y --purge man-db
 sudo apt install -y git-all screen nodejs
-sudo apt-get install npm
+sudo apt-get install -y npm
 sudo systemctl stop apache2
 sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 sudo service iptables save

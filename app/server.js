@@ -14,7 +14,7 @@ var hostname = os.hostname();
 
 var port = process.env.PORT;
 
-const VM_ADDR = "http://35.224.149.167";
+const VM_ADDR = "http://35.188.37.178";
 
 var app = express();
 app.use(bodyParser.json());

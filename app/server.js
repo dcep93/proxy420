@@ -63,7 +63,15 @@ app.post("/", (req, res) =>
       if (cached && timestamp - cached.timestamp < maxAgeMs)
         return Promise.resolve(cached.data);
       return fetch(url, options)
-        .then((resp) => resp.text())
+        .then((resp) =>
+          options.base64
+            ? resp
+                .arrayBuffer()
+                .then((arrayBuffer) =>
+                  btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
+                )
+            : resp.text()
+        )
         .then((data) => {
           cache[url] = { timestamp, data };
           return data;

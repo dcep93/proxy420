@@ -64,7 +64,7 @@ app.post("/", (req, res) =>
         return Promise.resolve(cached.data);
       return fetch(url, options)
         .then((resp) =>
-          options.base64
+          (options || {}).base64
             ? resp
                 .arrayBuffer()
                 .then((arrayBuffer) =>

@@ -68,7 +68,12 @@ app.post("/", (req, res) =>
             ? resp
                 .arrayBuffer()
                 .then((arrayBuffer) =>
-                  btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
+                  btoa(
+                    new Uint8Array(arrayBuffer).reduce(
+                      (data, byte) => data + String.fromCharCode(byte),
+                      ""
+                    )
+                  )
                 )
             : resp.text()
         )

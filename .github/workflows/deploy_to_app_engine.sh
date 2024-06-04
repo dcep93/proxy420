@@ -16,8 +16,9 @@ set -euo pipefail
 
 cd app
 export GOOGLE_APPLICATION_CREDENTIALS="gac.json"
-echo "$1" > "$GOOGLE_APPLICATION_CREDENTIALS"
+echo "$1" >"$GOOGLE_APPLICATION_CREDENTIALS"
 npm install google-auth-library
 gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
 project_id="$(cat $GOOGLE_APPLICATION_CREDENTIALS | jq -r .project_id)"
 gcloud app deploy --project "${project_id}" --version 1
+gsutil -m rm -r "gs://us.artifacts.${project_id}.appspot.com"

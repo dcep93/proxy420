@@ -15,6 +15,7 @@ set -euo pipefail
 # gcloud iam service-accounts keys create gac.json --iam-account "deployer-github@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com"
 # cat gac.json
 
+
 cd app
 export GOOGLE_APPLICATION_CREDENTIALS="gac.json"
 echo "$1" >"$GOOGLE_APPLICATION_CREDENTIALS"
